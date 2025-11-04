@@ -36,7 +36,8 @@ struct MinHeap {
         int temp = data[pos];
         while (pos > 0) {
             int parent = (pos - 1) / 2;
-            if (weightArr[temp] >= weightArr[data[parent]])
+            if (weightArr[temp] > weightArr[data[parent]] ||
+                (weightArr[temp] == weightArr[data[parent]] && temp > data[parent]))
                 break;
 
             data[pos] = data[parent];
@@ -51,10 +52,13 @@ struct MinHeap {
             int l  = 2 * pos + 1;
             int r = 2 * pos + 2;
             int min = pos;
-            if (l < size && weightArr[data[l]] < weightArr[data[min]]) {
+            if (l < size && (weightArr[data[l]] < weightArr[data[min]] ||
+           (weightArr[data[l]] == weightArr[data[min]] && data[l] < data[min]))) {
                 min = l;
             }
-            if (r < size && weightArr[data[r]] < weightArr[data[min]]) {
+            if (r < size &&
+           (weightArr[data[r]] < weightArr[data[min]] ||
+           (weightArr[data[r]] == weightArr[data[min]] && data[r] < data[min]))) {
                 min = r;
             }
             if (min == pos)
