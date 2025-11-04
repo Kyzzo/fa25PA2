@@ -121,6 +121,26 @@ void generateCodes(int root, string codes[]) {
     // Use stack<pair<int, string>> to simulate DFS traversal.
     // Left edge adds '0', right edge adds '1'.
     // Record code when a leaf node is reached.
+    if (root == -1) return;
+    stack<pair<int, string>> s;
+    s.push({root, ""});
+    while (!s.empty()) {
+        pair<int, string> pair = s.top();
+        int node = pair.first;
+        string code = pair.second;
+        s.pop();
+        int left = leftArr[node];
+        int right = rightArr[node];
+        if (left == -1 && right == -1) {
+            char ch = charArr[node];
+            codes[ch - 'a'] = code;
+        } else {
+            if (right != -1)
+                s.push({right, code + "1"});
+            if (left != -1)
+                s.push({left, code + "0"});
+        }
+    }
 }
 
 // Step 5: Print table and encoded message
